@@ -22,8 +22,12 @@ function playSingleRound() {
   getRandomChoice();
   // prompt the user to make their choice
   let playerSelection = prompt(
-    "Choose rock, paper, or scissors!"
-  ).toLowerCase();
+    "Choose rock, paper, or scissors!");
+  if (playerSelection !== null) {
+    playerSelection = playerSelection.trim().toLowerCase();
+  } else {
+    console.log("User cancelled the prompt.")
+  }
   // compare the user's choice with its own, and based on conditional logic, determine the winner;
   let roundResult;
 
@@ -100,7 +104,7 @@ function game() {
       alert("Please replay the round...");
     } else {
       playerOverallScore += roundScore;
-      i--;
+      i++;
     }
   }
 
