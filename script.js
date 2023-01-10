@@ -1,7 +1,7 @@
 // When the user opens a new game (by opening or refreshing the page), the computer makes a random choice of rock, paper or scissors;
 function getRandomChoice() {
-  let i = Math.floor(Math.random() * 3);
-  switch (i) {
+  let diceThrow = Math.floor(Math.random() * 3);
+  switch (diceThrow) {
     case 0:
       computerSelection = "rock";
       break;
@@ -42,8 +42,7 @@ function playSingleRound() {
         alert(`You win! ${playerSelection} beats ${computerSelection}`);
         return (roundResult = 1);
       } else {
-        alert("Please choose either 'rock', 'paper' or 'scissors'.");
-        return (roundResult = null);
+        alert("Something went wrong with the computer's choice.");
       }
       break;
 
@@ -61,8 +60,7 @@ function playSingleRound() {
         alert(`You lose - ${computerSelection} beats ${playerSelection}.`);
         return (roundResult = -1);
       } else {
-        alert("Please choose either 'rock', 'paper' or 'scissors'.");
-        return (roundResult = null);
+        alert("Something went wrong with the computer's choice.");
       }
       break;
 
@@ -80,10 +78,13 @@ function playSingleRound() {
         alert("It's a tie.");
         return (roundResult = 0);
       } else {
-        alert("Please choose either 'rock', 'paper' or 'scissors'.");
-        return (roundResult = null);
+        alert("Something went wrong with the computer's choice.");
       }
       break;
+    default:
+      alert("Please choose either 'rock', 'paper' or 'scissors'.");
+      playSingleRound();
+      return (roundResult = null);
   }
 }
 
@@ -110,6 +111,6 @@ function game() {
   } else if (playerOverallScore === 0) {
     alert("It's a tie. Want to try again?");
   } else {
-    alert("Something went wrong...no result from the game.");
+    alert("Something went wrong...no result from the ga with the c's choi");
   }
 }
