@@ -3,6 +3,8 @@
 ## Overview
 A simple console-based app in which the user plays 'Rock, Paper, Scissors' against the computer.
 
+Note: This is scratchpad pseudocode. I changed the algorithm slightly in various places during implementation.
+
 ## Steps
 
 - When the user opens or refreshes the page, the game doesn't start automatically
@@ -37,7 +39,3 @@ A simple console-based app in which the user plays 'Rock, Paper, Scissors' again
         - if gameScore === 1
           - alert "you won the game!"
 
-NOTES:
-- Need to fix ';' character looks the same when it's suggested by text editor as when I type it myself. 
-  - Note current system theme (to not use again)
-  - Change system theme 
