@@ -12,20 +12,23 @@ function game() {
     let roundResultArr = playRound(); // Play one round between computer and player, which returns an arr of [computerSelection, playerSelection] || null if user quits game || false if input is invalid
     if (roundResultArr === null) {
       // exits the game
-      return;
+      return console.log('Player exited the game');
     } else if (roundResultArr === false) {
-      // restarts the current round
-      i--;
+      // skips back out of while loop and restarts the current round
     } else {
       playerScoreCard += calcRoundWinner(roundResultArr); // Add current round result to player's score
+      i++; // increment counter
     }
   }
   if (playerScoreCard === 0) {
     alert(`End of game: You have tied with the computer`);
+    return console.log('Tie');
   } else if (playerScoreCard < 0) {
     alert(`End of game: Sorry, you lost! Better luck next time!`);
+    return console.log('Lose');
   } else {
     alert(`End of game: Congratulations! You won!`);
+    return console.log('Win');
   }
 }
 
