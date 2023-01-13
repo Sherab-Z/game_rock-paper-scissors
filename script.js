@@ -1,31 +1,48 @@
 // - When the user opens or refreshes the page, the game doesn't start automatically
 // F: game(): New Game is started
 //  - create variable named score with initial value of 0
-//  - 
-//  - if 
+//  -
+//  - if
 //  - if playRound() returns null, exit the game
 
-// F: Play one round between computer and player
-function playRound() {
+function game() {
+  let playerScoreCard = 0;   // keeps running summation of player's score
+  let i = 0;
+  while (i < 5) {
+    let roundResultArr = playRound();// Play one round between computer and player, which returns an arr of [computerSelection, playerSelection] || null if user quits game || false if input is invalid
+    if (roundResultArr === null) {   // exits the game
+      return;
+    } else if (roundResultArr === false) {    // restarts the current round
+      i--;
+    } else {
+      playerScoreCard += calcRoundWinner(roundResultArr);   // Add current round result to player's score
+    }
+  }
+  if (playerScoreCard === 0) {
+    alert(`End of game: You have tied with the computer`);
+  } else if (playerScoreCard < 0) {
+    alert(`End of game: Sorry, you lost! Better luck next time!`);
+  } else {
+    alert(`End of game: Congratulations! You won!`);
+  }
+}
+
+function playRound() {    // Play one round between computer and player
   let computerSelection = makeRandomComputerSelection();
   let playerSelection = getPlayerSelection();
   let pass = checkPlayerInput(playerSelection);
 
   if (pass === false || pass === null) {
     alert("Invalid input: please enter only 'rock', 'paper', or 'scissors'");
-    if (confirm("Do you wish to continue the game?")) {  // Restart current round in game()
-      return (-1); 
-    } else {  // Return null to game(), which will trigger exiting the game loop
-      return null; 
+    if (confirm("Do you wish to continue the game?")) {   // Triggers restart of current round in game()
+
+      return false;
+    } else {   // Triggers exiting game()
+      return null;
     }
-  } else if (pass === true) {  // if player's input is valid, playRound() returns an obj made of computer's and player's selections
-    return selectionObj = {   
-      computerSelection: computerSelection,
-      playerSelection: playerSelection,
-    };
-  } else {
-     // returns valid computer and player selections to game(), in the form of an arr
-  }
+  } else {    // if player's input is valid, playRound() returns an arr containing computer's and player's selections
+    return [computerSelection, playerSelection];
+  } 
 }
 
 // F: Computer makes a random choice of rock, paper or scissors, which is stored in variable computerSelection
@@ -48,7 +65,9 @@ function makeRandomComputerSelection() {
 
 // F: prompts user for their choice or rock, paper or scissors; returns a string that is stored in the variable playerSelection inside playRound()
 function getPlayerSelection() {
-  let playerInput = prompt("Please choose rock, paper, or scissors...").trim().toLowerCase(); // Get player selection
+  let playerInput = prompt("Please choose rock, paper, or scissors...")
+    .trim()
+    .toLowerCase(); // Get player selection
   return playerInput;
 }
 
@@ -61,11 +80,70 @@ function checkPlayerInput(playerInput) {
       return true;
     } else {
       return false;
-    }// returns true if playerInput is valid, false if it's invalid
+    } // returns true if playerInput is valid, false if it's invalid
   } else {
     // if user cancels the prompt, return null to playRound()
     console.log("Player cancelled the prompt.");
     return null;
+  }
+}
+
+function calcRoundWinner(resultObj) {
+  let alertWin = () =>
+    alert(
+      `Yay, ${playerSelection} beats ${computerSelection} - you win this round!`
+    );
+  let = () =>
+    alert(
+      `Sorry, ${computerSelection} beats ${playerSelection} - you lose this round.`
+    );
+  let alertTie = () =>
+    alert(
+      `It's a tie. You and the computer both selected ${computerSelection}`
+    );
+  let alertError = () =>
+    alert(
+      "Sorry, something went wrong...restarting the game. If this error persists, then please contact support"
+    );
+
+  switch (resultObj) {
+    case resultObj["computerSelection"] === resultObj["playerSelection"]:
+      alertTie();
+      return 0;
+      break;
+    case resultObj["computerSelection"] === "rock" ||
+      resultObj["playerSelection"] === "scissors":
+      alertLose();
+      return -1;
+      break;
+    case resultObj["computerSelection"] === "rock" ||
+      resultObj["playerSelection"] === "paper":
+      alertWin();
+      return 1;
+      break;
+    case resultObj["computerSelection"] === "paper" ||
+      resultObj["playerSelection"] === "rock":
+      alertLose();
+      return -1;
+      break;
+    case resultObj["computerSelection"] === "paper" ||
+      resultObj["playerSelection"] === "scissors":
+      alertWin();
+      return 1;
+      break;
+    case resultObj["computerSelection"] === "scissors" ||
+      resultObj["playerSelection"] === "paper":
+      alertLose();
+      return -1;
+      break;
+    case resultObj["computerSelection"] === "scissors" ||
+      resultObj["playerSelection"] === "rock":
+      alertWin();
+      return 1;
+      break;
+    default:
+      alertError();
+      return 0;
   }
 }
 
@@ -78,7 +156,7 @@ function checkPlayerInput(playerInput) {
 //           - return 0
 //         - if computerSelection beats userSelection:
 //           - alert user "{computerSelection} beats {userSelection} - you lose this round."
-//           - return -1
+//           - return false
 //         - if userSelection beats computerSelection:
 //           - alert user "{userSelection} beats {computerSelection} - you win this round!"
 //           - return 1
@@ -88,7 +166,7 @@ function checkPlayerInput(playerInput) {
 //       - F: announceGameWinner():
 //         - if gameScore === 0
 //           - alert "tie"
-//         - if gameScore === -1
+//         - if gameScore === false
 //           - alert "you lost the game."
 //         - if gameScore === 1
 //           - alert "you won the game!"
@@ -141,7 +219,7 @@ function checkPlayerInput(playerInput) {
 //       } else if (computerSelection === "paper") {
 //         console.log(`szcl: round complete - player selected: ${playerSelection}, computer selected: ${computerSelection}!`);
 //         alert(`You lose - ${computerSelection} beats ${playerSelection}.`);
-//         return (roundResult = -1);
+//         return (roundResult = false);
 //       } else if (computerSelection === "scissors") {
 //         console.log(`szcl: round complete - player selected: ${playerSelection}, computer selected: ${computerSelection}!`);
 //         alert(`You win! ${playerSelection} beats ${computerSelection}`);
@@ -163,7 +241,7 @@ function checkPlayerInput(playerInput) {
 //       } else if (computerSelection === "scissors") {
 //         console.log(`szcl: round complete - player selected: ${playerSelection}, computer selected: ${computerSelection}!`);
 //         alert(`You lose - ${computerSelection} beats ${playerSelection}.`);
-//         return (roundResult = -1);
+//         return (roundResult = false);
 //       } else {
 //         alert("Something went wrong with the computer's choice.");
 //       }
@@ -173,7 +251,7 @@ function checkPlayerInput(playerInput) {
 //       if (computerSelection === "rock") {
 //         console.log(`szcl: round complete - player selected: ${playerSelection}, computer selected: ${computerSelection}!`);
 //         alert(`You lose - ${computerSelection} beats ${playerSelection}.`);
-//         return (roundResult = -1);
+//         return (roundResult = false);
 //       } else if (computerSelection === "paper") {
 //         console.log(`szcl: round complete - player selected: ${playerSelection}, computer selected: ${computerSelection}!`);
 //         alert(`You win - ${playerSelection} beats ${computerSelection}!`);
