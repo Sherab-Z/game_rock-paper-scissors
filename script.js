@@ -65,9 +65,7 @@ function makeRandomComputerSelection() {
 
 // F: prompts user for their choice or rock, paper or scissors; returns a string that is stored in the variable playerSelection inside playRound()
 function getPlayerSelection() {
-  let playerInput = prompt("Please choose rock, paper, or scissors...")
-    .trim()
-    .toLowerCase(); // Get player selection
+  let playerInput = prompt("Please choose rock, paper, or scissors..."); // Get player selection
   return playerInput;
 }
 
@@ -88,22 +86,22 @@ function checkPlayerInput(playerInput) {
   }
 }
 
-function calcRoundWinner(resultObj) {
-  let alertWin = () =>
+function calcRoundWinner (resultObj) {
+  const alertWin = () =>
     alert(
       `Yay, ${playerSelection} beats ${computerSelection} - you win this round!`
     );
-  let = () =>
+  const alertLose = () =>
     alert(
       `Sorry, ${computerSelection} beats ${playerSelection} - you lose this round.`
     );
-  let alertTie = () =>
+  const alertTie = () =>
     alert(
       `It's a tie. You and the computer both selected ${computerSelection}`
     );
-  let alertError = () =>
+  const alertError = () =>
     alert(
-      "Sorry, something went wrong...restarting the game. If this error persists, then please contact support"
+      'Sorry, something went wrong...restarting the game. If this error persists, then please contact support'
     );
 
   switch (resultObj) {
