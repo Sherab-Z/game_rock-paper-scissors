@@ -1,168 +1,137 @@
-// - When the user opens or refreshes the page, the game doesn't start automatically
-// F: game(): New Game is started
-//  - create variable named score with initial value of 0
-//  -
-//  - if
-//  - if playRound() returns null, exit the game
+//  --- GET DOM ELEMENT REFERENCES ---
+//  Buttons
+const newGameBtn = document.querySelector(".new-game.btn");
+const rockBtn = document.querySelector(".rock.wpn.btn");
+const paperBtn = document.querySelector(".paper.wpn.btn");
+const scissorsBtn = document.querySelector(".scissors.wpn.btn");
 
-// Play an entire game with 5 rounds, then alert and console.log the result
+//  TextDisplays
+const instructTextDisplayBox = document.querySelector(".instruct.msg.text-display-box");
+const resultsTextDisplayBox = document.querySelector(".results.msg.text-display-box");
+
+// --- EVENT HANDLERS ---
+// Buttons
+const clickNewGame = newGameBtn.addEventListener("click", () => {
+  console.log("'New Game' btn clicked");
+
+  game();
+});
+const playerChoosesRock = rockBtn.addEventListener("click", () => {
+  console.log("'Rock' btn clicked");
+
+  playRound("rock");
+});
+const playerChoosesPaper = paperBtn.addEventListener("click", () => {
+  console.log("'Paper' btn clicked");
+
+  playRound("paper");
+});
+const playerChoosesScissors = scissorsBtn.addEventListener("click", () => {
+  console.log("'Scissors' btn clicked");
+
+  playRound("scissors");
+});
+
+// --- APPENDING DOM ELEMENTS TO CONTAINERS ---
+
+// FUNCTION: Convert a DOM reference, elementObj, into a true array, in order to feed that into appendTextToElements(). This is needed because appendTextToElements() can only process a collection of DOM elements in the form of a true array.
+function elementToArray(elementObj) {
+  if (elementObj instanceof Element) {
+    return [elementObj];
+  } else if (elementObj instanceof NodeList || Array.isArray(elementObj)) {
+    return Array.from(elementObj);
+  } else {
+    throw new Error(
+      "Invalid argument: element must be a DOM element, a NodeList, or an array."
+    );
+  }
+}
+
+// FUNCTION: Append text to DOM element(s) for display on screen.
+function appendTextToElements(
+  text, // (string: required) The text content to be appended
+  elements, // (array, node-list, or other array-like obj: required) A list of DOM references ()
+  index = null, // (number: optional) This should be passed in if text is to be appended to only one specific element in the DOM reference list
+  singleElFromList = false // (boolean: optional)  Must be set to true if an index number is passed in to select a single el from a list of DOM references
+) {
+  const els = elementToArray(elements); // Converts elements to an actual array of DOM references
+  if (index === null && !singleElFromList) {
+    // Default settings - a reference to only one DOM element is passed in as the elements arg
+    for (let i = 0; i < els.length; i++) {
+      const el = els[i];
+      const textNode = document.createTextNode(text);
+      el.appendChild(textNode);
+    }
+  } else if (index !== null) {
+    const el = els[index];
+    const textNode = document.createTextNode(text);
+    el.appendChild(textNode);
+  } else {
+    throw new Error("An index is required when singleElFromList is true.");
+  }
+}
+
+// ....................................
+
+/* Pseudocode
+x1. Player clicks 'New Game' button
+x2. CALL game(): A new game is started
+  - Player score card is initialized: 
+      playerScoreCard = 0
+  - Computer score card is initialized: 
+      computerScoreCard = 0
+  - Player choice in current round is initialized: 
+      playerChoice = ''
+  - Computer choice in current round is initialized:
+      computerChoice = ''
+3. ROUNDS:
+    a. CALL askPlayerForWpnChoice(): Display text to Player: `Round ${# of current round}: Select your weapon...`
+    b. When Player clicks a weapon button -> CALL playRound():
+      - Computer selects a random weapon
+      - CALL calculateRoundWinner(): Determine this round's winner, 
+        - RETURN true if Player won, 
+        - RETURN false if Computer won, 
+        - THROW ERROR otherwise
+      - CALL displayRoundWinner(): Display this round's winner to Player:
+              - If Player won, APPEND TO DOM: `You won, Well done. \n Round ${# of current round}: Select your weapon...`
+              - If Computer won, APPEND TO DOM: `${computerChoice} beats ${playerChoice}, you lost. \n Round ${# of current round}: Select your weapon...`
+      - CALL askPlayerForWpnChoice(): Display text to Player: `Round ${# of current round}: Select your weapon...` 
+4. Repeat ROUNDS until playerScoreCard === 5
+5. Finally, CALL displayGameWinner(): Display the result of the game to Player and ask to play again
+  - IF Player won, APPEND TO DOM: `Congratulations! You won the game!!! \n
+  Press 'New Game' to play again...
+  - ELSE IF Computer won, APPEND TO DOM: `Sorry, you lost this game. \n
+  Press 'New Game' to try again...
+*/
+
+// Make & return the selections for one round between Computer and Player
+function playRound(wpnStr) {
+  const playerSelection = wpnStr;
+  const computerSelection = makeRandomComputerSelection();
+  const scoresArr = [];
+
+  return scoresArr;
+}
+
+function roundLoop() {
+  while (playerScoreCard < 5) {  // Repeat rounds until Player reaches 5 points
+    playerScoreCard += calcRoundWinner(roundSelectionsArr); // Add current round result to player's score
+
+    }
+}
+
 function game() {
-  let playerScoreCard = 0; // keeps running summation of player's score
-  let i = 0;
-  while (i < 5) {
-    let roundResultArr = playRound(); // Play one round between computer and player, which returns an arr of [computerSelection, playerSelection] || null if user quits game || false if input is invalid
-    if (roundResultArr === null) {
-      // exits the game
-      console.log("Player exited the game");
-    } else if (roundResultArr === false) {
-      // skips back out of while loop and restarts the current round
-    } else {
-      // if playRound() returned a valid arr:
-      playerScoreCard += calcRoundWinner(roundResultArr); // Add current round result to player's score
-      i++; // increment counter
-    }
-  }
-  // After 5 rounds, give result to player and console.log the result
-  if (playerScoreCard === 0) {
-    alert(`End of game: You have tied with the computer`);
-    console.log("Tie");
-  } else if (playerScoreCard < 0) {
-    alert(`End of game: Sorry, you lost! Better luck next time!`);
-    console.log("Lose");
-  } else {
-    alert(`End of game: Congratulations! You won!`);
-    console.log("Win");
-  }
+  console.log("game() called");
+
+  // keep running summation of Player & Computer scores, and initialize an array to hold each round's selections
+  let playerScoreCard = 0;
+  let computerScoreCard = 0;
+  let playerChoice = '';
+  let computerChoice = '';
+
+  // Play rounds until Player reaches 5 points
+  roundLoop();
+
 }
 
-// Play one round between computer and player
-function playRound() {
-  // Get computer's and player's selections
-  let computerSelection = makeRandomComputerSelection();
-  let playerSelection = getPlayerSelection();
-  // Validate player's selection & store in pass
-  let pass = checkPlayerInput(playerSelection);
 
-  if (pass === false || pass === null) {
-    alert("Invalid input: please enter only 'rock', 'paper', or 'scissors'");
-    if (confirm("Do you wish to continue the game?")) {
-      // Triggers restart of current round in game()
-      return false;
-    } else {
-      // Triggers exiting game()
-      return null;
-    }
-  } else {
-    // if player's input is valid, playRound() returns an arr containing computer's and player's selections
-    return [computerSelection, playerSelection];
-  }
-}
-
-// Computer makes a random choice of rock, paper or scissors, which returns string to computerSelection variable
-function makeRandomComputerSelection() {
-  let diceThrow = (Math.floor(Math.random() * 3)+1); // Random choice of 1, 2 or 3
-  switch (diceThrow) {
-    // Return computer's random game selection 
-    case 1:
-      return "rock";
-      break;
-    case 2:
-      return "paper";
-      break;
-    case 3:
-      return "scissors";
-      break;
-    default:
-    // All possible cases are already covered from Math.random
-  }
-}
-
-// Prompts user for their choice of rock, paper or scissors and returns entered string to variable playerSelection inside playRound()
-function getPlayerSelection() {
-  let playerInput = prompt("Please choose rock, paper, or scissors..."); // Get player selection
-  return playerInput;
-}
-
-// Validates player's string input and returns true if valid, false if invalid, or null if the player cancels the 'Do you wish to continue?' prompt
-function checkPlayerInput(playerInput) {
-  let validInputArr = ["rock", "paper", "scissors"];    // Valid selections
-  if (playerInput !== null) {
-    // If player types something and presses enter
-    playerInput = playerInput.trim().toLowerCase(); // convert playerInput to lowercase & trim whitespace from ends
-    if (validInputArr.includes(playerInput)) {
-      // If player input is valid
-      return true;
-    } else {
-      // If player input is invalid
-      return false;
-    } 
-  } else {
-    // if user cancels the prompt, return null to playRound() which triggers game() to exit
-    console.log("Player cancelled the prompt.");
-    return null;
-  }
-}
-
-// Determine whether the player won, lost or tied in the current round
-function calcRoundWinner(roundResultArr) {
-  // Possible alerts
-  const alertWin = () =>
-    alert(
-      `Yay, ${roundResultArr[1]} beats ${roundResultArr[0]} - you win this round!`
-    );
-  const alertLose = () =>
-    alert(
-      `Sorry, ${roundResultArr[0]} beats ${roundResultArr[1]} - you lose this round.`
-    );
-  const alertTie = () =>
-    alert(
-      `It's a tie. You and the computer both selected ${roundResultArr[0]}}`
-    );
-  const alertError = () =>
-    alert(
-      "Sorry, something went wrong...restarting the game. If this error persists, then please contact support"
-    );
-
-  // Decide result, alert, and return score to variable score in game()
-  if (roundResultArr[0] === roundResultArr[1]) {
-    // Tie in round
-    alertTie();
-    return 0;
-  } else if (roundResultArr[0] === "rock" && roundResultArr[1] === "scissors") {
-    // Lose round
-    alertLose();
-    return -1;
-  } else if (roundResultArr[0] === "rock" && roundResultArr[1] === "paper") {
-    // Win round
-    alertWin();
-    return 1;
-  } else if (roundResultArr[0] === "paper" && roundResultArr[1] === "rock") {
-    // Lose round
-    alertLose();
-    return -1;
-  } else if (
-    roundResultArr[0] === "paper" &&
-    roundResultArr[1] === "scissors"
-  ) {
-    // Win round
-    alertWin();
-    return 1;
-  } else if (
-    roundResultArr[0] === "scissors" &&
-    roundResultArr[1] === "paper"
-  ) {
-    // Lose round
-    alertLose();
-    return -1;
-  } else if (roundResultArr[0] === "scissors" && roundResultArr[1] === "rock") {
-    // Win round
-    alertWin();
-    return 1;
-  } else {
-    // Error in round result array
-    alertError();
-    return 0;
-  }
-}
-
-// END OF CODE ################################################################

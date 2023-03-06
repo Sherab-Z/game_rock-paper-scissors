@@ -1,0 +1,201 @@
+/* ToDo:
+  - Make into flexbox layout
+    - Header, Main, Footer
+    - Sections
+    - Containers
+    - El's
+  - Colors
+  - Remove wire-frame borders
+  */
+/* --- CSS RESET --- */
+
+/* [ DEVELOPMENT STAGE WIRE-FRAMES ]*/
+.a {
+  border: red 1px solid;
+}
+
+.b {
+  border: orange solid 1px;
+}
+
+.c
+ {
+  border: rgb(239, 239, 30) solid 1px;
+}
+
+.d {
+  border: green solid 1px;
+}
+
+.e {
+  border: blue solid 1px;
+}
+
+.f {
+  border: violet solid 1px;
+}
+
+/* --- EVERY ELEMENT --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: roboto;
+}
+
+/* --- OVERALL PAGE --- */
+
+.a {
+  padding: 0 15%;
+}
+
+/* VARIOUS CONTAINER TYPES */
+
+header,
+section,
+.container
+{
+  justify-content: center;
+  align-items: center;
+}
+
+.textbox
+{
+  border-radius: 10px;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  padding: 10px;
+}
+
+/* Text-styling */
+* {
+  font-family: 'Roboto Mono', monospace;
+}
+
+/* --- FLEX LAYOUT --- */
+
+/* Apply flex-direction: column; */
+body,
+header,
+main,
+footer,
+section,
+.start-sect,
+.gameplay-sect,
+.results-sect,
+.container,
+.textbox {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  flex-grow: 1;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* Apply flex-direction: row; */
+.wpn.btns.container,
+.current.scores.container {
+  flex-direction: row;
+}
+
+/* --- ELEMENT GROUPS --- */
+
+/* Buttons */
+.new-game.btns.container {
+  padding: 5px;
+  
+}
+
+.wpn.btns.container {
+  padding:10px 20px;
+  column-gap: 15%;
+}
+
+.btn {
+  font-size: large;
+  color:#020201;
+  padding: 5px 10px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* Images in buttons */
+.btn .img {
+  width: 100%;
+  height: 85px;
+}
+
+/* --- AREAS IN PAGE --- */
+
+/* Header */
+
+header {
+  color: #182010;
+  flex-grow: 1;
+  min-height: 50px;
+  max-height: 10vh;
+}
+
+/* --- Main --- */
+
+main {
+  flex-grow: 8;
+  min-height: 500px;
+  max-height: 85vh;
+}
+
+/* --- Main > Start Section --- */
+
+
+
+.new-game.btn {
+  margin: 10px;
+}
+
+section.start-sect {
+  flex: 1 0 30vh;
+}
+
+div.instruct.msg.textbox {
+  border: 3px solid darkslategrey;
+  width: 100%;
+  height: 100px;
+}
+/* --- Main > Gameplay Section --- */
+
+section.gameplay-sect {
+  flex: 1 0 30vh;
+  align-content: stretch;
+}
+
+/* --- Main > Results Section --- */
+section.results-sect {
+  flex: 1 0 25vh;
+}
+
+div.results.msg.textbox {
+  border: 3px solid darkslategrey;
+  width: 100%;
+  min-height: 100px;
+}
+/* --- Footer --- */
+
+footer {
+  flex-grow: 1;
+  min-height: 50px;
+  max-height: 5vh;
+  color: black;
+}
+
+footer .container,
+.container .attribution {
+  align-items: center;
+  justify-content: center;
+  font-size:x-small;
+}

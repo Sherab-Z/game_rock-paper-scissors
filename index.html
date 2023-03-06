@@ -5,11 +5,74 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rock-Paper-Scissors Game</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;300;400;500&display=swap');
+  </style>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <h1>Rock, Paper, Scissors</h1>
+  <header class="a">
+    <div class="b page heading container">
+      <h1 class="c page heading txt">Rock, Paper, Scissors!</h1>
+    </div>
+  </header>
+  
+  <main class="a">
+    <section class="b start sect">
+      <div class="c new-game btns container">
+        <button class="d new-game btn">New Game</button>
+      </div>
 
-  <p>This is a console game: press F12 to open the console, then type game(), press Enter, and enjoy!</p>
+      <div class="c instruct container">
+        <h2 class="d instruct title txt">Instructions:</h2>
+        <div class="d instruct msg text-display-box">
+          <p class="e instruct msg txt"></p>
+        </div>
+      </div>
+    </section>
+    
+    <section class="b gameplay sect ">
+      <div class="c wpn btns container">
+        <button class="d rock wpn btn"><img class="e rock wpn img" src="media/rock.png" alt="Black & white icon of a rock"></button>
+        <button class="d paper wpn btn"><img class="e paper wpn img" src="media/paper.png" alt="Black & white icon of a paper scroll"></button>
+        <button class="d scissors wpn btn"><img class="e scissors wpn img" src="media/scissors.png" alt="Black & white icon of a pair of scissors"></button>
+      </div>
+
+      <div class="c current scores container">
+        <div class="d user plyr current-score container">
+          <h3 class="e user current score title txt">You:</h3>
+          <div class="e user current score score container">
+            <p class="f user current score score num"></p>
+          </div>
+        </div>
+
+        <div class="d computer plyr current score container">
+          <h3 class="e computer plyr current score title txt">Computer:</h3>
+          <div class="e computer plyr current score container">
+            <p class="f computer plyr current score num"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="b results sect">  
+      <div class="c results container">
+        <h2 class="d results title txt">Results:</h2>
+        <div class="d results msg text-display-box">
+          <p class="e results msg txt"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="a">
+      <div class="b foot attributions container">
+        <p class="c author attribution">App built by Sherab @WholeTreeDev</p>
+        <a class="c images attribution link" href="https://www.flaticon.com/free-icons/scissors" title="scissors icons">Icons created by Freepik - Flaticon</a>
+      </div>
+  </footer>
+  
+
   <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
