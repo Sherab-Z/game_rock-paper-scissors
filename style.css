@@ -52,6 +52,7 @@
 /* VARIOUS CONTAINER TYPES */
 
 header,
+footer,
 section,
 .container
 {
@@ -59,7 +60,7 @@ section,
   align-items: center;
 }
 
-.textbox
+.text-display-box
 {
   border-radius: 10px;
   width: 100%;
@@ -83,11 +84,8 @@ header,
 main,
 footer,
 section,
-.start-sect,
-.gameplay-sect,
-.results-sect,
 .container,
-.textbox {
+.text-display-box {
   display: flex;
   flex-direction: column;
   list-style: none;
@@ -162,7 +160,7 @@ section.start-sect {
   flex: 1 0 30vh;
 }
 
-div.instruct.msg.textbox {
+div.instruct.msg.text-display-box {
   border: 3px solid darkslategrey;
   width: 100%;
   height: 100px;
@@ -179,7 +177,7 @@ section.results-sect {
   flex: 1 0 25vh;
 }
 
-div.results.msg.textbox {
+div.results.msg.text-display-box {
   border: 3px solid darkslategrey;
   width: 100%;
   min-height: 100px;

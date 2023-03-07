@@ -5,37 +5,44 @@ A simple console-based app in which the user plays 'Rock, Paper, Scissors' again
 
 Note: This is scratchpad pseudocode. I changed the algorithm in various places during implementation.
 
-## Steps
-
-- When the user opens or refreshes the page, the game doesn't start automatically
-- Player clicks 'New Game' button: calls game() function
-  1. Create variable named playerScore with initial value of 0 - at the end of the game if playerScore > 0 then Player wins, or if playerScore < 0 then Player loses, or if playerScore == 0 then it's a tie
-  2. Display message in div: 'Round #: Choose your weapon...' where '#' (is the round number). Program then waits for the Player's selection...
-  3. When Player clicks one of the 3 buttons: 'Rock', 'Paper', or 'Scissors':
-      - F: playRound(playerSelection) is called by event handler, which passes Player's selected weapon string (in lower case) as the argument
-      - F: randomChoice(): Computer makes a random choice of 'rock', 'paper' or 'scissors', which is stored in the variable computerSelection
-      - Returns the array [playerSelection, computerSelection]
-  4. F: determineRoundWinner(): assign to variable roundScore
-    - Compare userSelection with computerSelection (based on conditional logic):
-      - if userSelection == computerSelection: 
-        - display to Player:  "tie"
-        - return 0
-      - if computerSelection beats userSelection: 
-        - display to Player: "{computerSelection} beats {userSelection} - you lose this round."
-        - return -1
-      - if userSelection beats computerSelection:
-        - display to Player: "{userSelection} beats {computerSelection} - you win this round!"
-        - return 1
-    - Now this round is complete - return value of roundScore to game() 
-  5. Repeat until 5 rounds are complete
-  6. Then announceGameWinner():
-    - if playerScore === 0
-      - display to Player: "tie" + Add button 'Play again?' which calls game() 
-    - if playerScore < 0
-      - display to Player: "you lost the game." + Add button 'Play again?' which calls game() 
-    - if playerScore > 0
-      - display to Player: "you won the game!" + Add button 'Play again?' which calls game() 
-  7. If Player clicks 'Play again', game() is called again and a new game begins.
+## Algorithm
+ 
+1. x User clicks 'New Game' button
+2. x CALL game(): A new game is started
+  x User score card is initialized: 
+      userScore = 0
+  x Computer score card is initialized: 
+      computerScore = 0
+  x User choice in current round is initialized: 
+      userChoice = ''
+  x Computer choice in current round is initialized:
+      computerChoice = ''
+  - Display initial instructions to User:
+    - "Welcome to the game! "
+    - CALL askUserForWpnChoice(): Display text to User: `Round ${# of current round}: Select your weapon...`
+3. ROUNDS:
+    When User clicks a weapon button -> CALL playRound(weaponString):
+      - Computer selects a random weapon
+      - CALL determineRoundWinner(userChoice, computerChoice): Determine this round's winner, 
+        - RETURN true if User won, 
+        - RETURN false if Computer won, 
+        - THROW ERROR otherwise
+      - CALL updateScores(): 
+        - If User won this round: userScore += 1
+        - If Computer won this round: computerScore += 1
+      - CALL displayRoundWinner(): Display this round's winner to User:
+              - If User won, APPEND TO DOM: `You won, Well done. \n Round ${# of current round}: Select your weapon...`
+              - If Computer won, APPEND TO DOM: `${computerChoice} beats ${userChoice}, you lost. \n Round ${# of current round}: Select your weapon...`
+      - Delay 2 seconds, then:
+        - Ask User for their next selection: CALL askUserForWpnChoice(): Display text to User: `Round ${# of current round}: Select your weapon...` 
+4. Repeat ROUNDS while userScore < 5
+5. When userScore === 5: 
+  - CALL displayGameWinner(): Display the result of the game to User and ask to play again
+  - wpn buttons deactivated due to conditional logic in their respective event handlers
+  - IF User won, APPEND TO DOM: `Congratulations! You won the game!!! \n
+  Press 'New Game' to play again...
+  - ELSE IF Computer won, APPEND TO DOM: `Sorry, you lost this game. \n
+  Press 'New Game' to try again...
 
 Extras:
     - F: playRound(playerSelection) is called by event handler, which passes the selected weapon string (in lower case) as the argument
