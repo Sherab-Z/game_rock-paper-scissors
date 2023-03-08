@@ -97,13 +97,13 @@ function updateScores(roundWinner) {
     case "tie":
     // Do nothing - players' scores don't change for a tie
     case "user_wins_round":
-      gameDataObj["userScore"]++; // Increment User score by 1
+      gameDataObj.userScore ++; // Increment User score by 1
     case "computer_wins_round":
-      gameDataObj["computerScore"]++; // Increment Computer score by 1
+      gameDataObj.computerScore ++; // Increment Computer score by 1
   }
 }
 
-function displayRoundWinnerTxt(roundWinner, roundNum) {
+function displayRoundWinnerTxt(roundWinner) {
   const tieRoundMsg = `It's a tie: you and the Computer both chose ${userChoice}.`;
   const userWinsRoundMsg = `Well chosen! ${userChoice} beats ${computerChoice} - You win this round!`;
   const computerWinsRoundMsg = `Sorry, ${computerChoice} beats ${userChoice}. The Computer wins this round!`;
@@ -112,24 +112,25 @@ function displayRoundWinnerTxt(roundWinner, roundNum) {
     case "tie":
       appendTextToElement(tieRoundMsg, resultsTxtDisplayBox);
     case "user_wins_round":
-
+      appendTextToElement(userWinsRoundMsg, resultsTxtDisplayBox);
     case "computer_wins_round":
+      appendTextToElement(computerWinsRoundMsg, resultsTxtDisplayBox);
   }
 }
 
 function askUserForWpnChoice() {
   // Message string to display to User
-  const askForWpnChoiceMsg = `Round ${gameDataObj.roundNum}: Choose your weapon!...`;
+  const requestWpnChoiceMsg = `Round ${gameDataObj.roundNum}: Choose your weapon!...`;
 
   // Display message to User inside of instructions box
-  appendTextToElement(askForWpnChoiceMsg, instructTxtDisplayBox);
+  appendTextToElement(requestWpnChoiceMsg, instructTxtDisplayBox);
 }
 
 
 // FUNC: Play one round between User vs Computer
-function playRound(wpnStr, userScore, computerScore, roundNum) {
+function playRound(wpnStr) {
   console.log("playRound() called");
-  gameDataObj["roundNum"]++; // Increment the round number
+  gameDataObj.roundNum ++; // Increment the round number
 
   // Get weapon choices from both players
   gameDataObj[''] = wpnStr;
