@@ -52,3 +52,6 @@ Extras:
 ## TODO:
 - Make gameSettingsObj to hold all settings (e.g. userScoreForGameEnd, etc) - to encapsulate those variables
 - Remove p elements from text-display-boxes and reassign classes in script.js - bc. textNode will be created & appended by JS anyway
+- For each new round, round-number not updating in instructions-box msg
+- Only 4 rounds being played
+- Old messages accumulating in text-display-boxes at each new round

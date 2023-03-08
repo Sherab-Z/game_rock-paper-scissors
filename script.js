@@ -107,14 +107,20 @@ function displayRoundWinnerTxt(roundWinner) {
   const tieRoundMsg = `It's a tie: you and the Computer both chose ${gameDataObj.currentUserWpnChoice}.`;
   const userWinsRoundMsg = `Well chosen! ${gameDataObj.currentUserWpnChoice} beats ${gameDataObj.currentComputerWpnChoice} - You win this round!`;
   const computerWinsRoundMsg = `Sorry, ${gameDataObj.currentComputerWpnChoice} beats ${gameDataObj.currentUserWpnChoice}. The Computer wins this round!`;
+  const errorMsg = `Error: Sorry, something went wrong...`;
 
   switch (roundWinner) {
     case "tie":
-      appendTextToElement(tieRoundMsg, resultsTxtDisplayBox);
+      appendTextToElement(tieRoundMsg, resultsTxtDisplayBox)
+      break;
     case "user_wins_round":
-      appendTextToElement(userWinsRoundMsg, resultsTxtDisplayBox);
+      appendTextToElement(userWinsRoundMsg, resultsTxtDisplayBox)
+      break;
     case "computer_wins_round":
-      appendTextToElement(computerWinsRoundMsg, resultsTxtDisplayBox);
+      appendTextToElement(computerWinsRoundMsg, resultsTxtDisplayBox)
+      break;
+    default:
+      appendTextToElement(errorMsg, resultsTxtDisplayBox);
   }
 }
 
