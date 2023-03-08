@@ -5,8 +5,8 @@ const userScoreForGameEnd = 5; // when User reaches this score, the game ends
 const gameDataObj = {
   // Keep track of the round number, and each player's score
   roundNum: 0,
-  userWpnChoice: '',
-  computerWpnChoice: '',
+  currentUserWpnChoice: '',
+  currentComputerWpnChoice: '',
   userScore: 0,
   computerScore: 0,
 };
@@ -70,10 +70,10 @@ function makeRandomComputerChoice() {
 }
 
 // FUNC: Returns the winner of the current round
-function determineRoundWinner(userChoice, computerChoice) {
+function determineRoundWinner(currentUserWpnChoice, currentComputerWpnChoice) {
   console.log("determineRoundWinner() called");
 
-  let choicesArr = [userChoice, computerChoice]; // For easier & more readable handling of the choices, turn them into an array
+  let choicesArr = [currentUserWpnChoice, currentComputerWpnChoice]; // For easier & more readable handling of the choices, turn them into an array
 
   if (choicesArr[0] === choicesArr[1]) {
     return "tie"; // If choices are the same, then User & Computer tied in this round
@@ -104,9 +104,9 @@ function updateScores(roundWinner) {
 }
 
 function displayRoundWinnerTxt(roundWinner) {
-  const tieRoundMsg = `It's a tie: you and the Computer both chose ${userChoice}.`;
-  const userWinsRoundMsg = `Well chosen! ${userChoice} beats ${computerChoice} - You win this round!`;
-  const computerWinsRoundMsg = `Sorry, ${computerChoice} beats ${userChoice}. The Computer wins this round!`;
+  const tieRoundMsg = `It's a tie: you and the Computer both chose ${gameDataObj.currentUserWpnChoice}.`;
+  const userWinsRoundMsg = `Well chosen! ${gameDataObj.currentUserWpnChoice} beats ${gameDataObj.currentComputerWpnChoice} - You win this round!`;
+  const computerWinsRoundMsg = `Sorry, ${gameDataObj.currentComputerWpnChoice} beats ${gameDataObj.currentUserWpnChoice}. The Computer wins this round!`;
 
   switch (roundWinner) {
     case "tie":
@@ -133,11 +133,11 @@ function playRound(wpnStr) {
   gameDataObj.roundNum ++; // Increment the round number
 
   // Get weapon choices from both players
-  gameDataObj[''] = wpnStr;
-  const computerChoice = makeRandomComputerChoice();
+  gameDataObj.currentUserWpnChoice = wpnStr;
+  gameDataObj.currentComputerWpnChoice = makeRandomComputerChoice();
 
   // Determine the winner of this round
-  const roundWinner = determineRoundWinner(gameDataObj.userChoice, gameDataObj.computerChoice);
+  const roundWinner = determineRoundWinner(gameDataObj.currentUserWpnChoice, gameDataObj.currentComputerWpnChoice);
 
   // Display the results of this round to User
   displayRoundWinnerTxt(roundWinner);
@@ -154,8 +154,8 @@ function resetGame() {
 
   // Initialize gameDataObj values for the start of a new game
   gameDataObj.roundNum = 1;
-  gameDataObj.userWpnChoice = '';
-  gameDataObj.computerWpnChoice = '';
+  gameDataObj.currentUserWpnChoice = '';
+  gameDataObj.currentComputerWpnChoice = '';
   gameDataObj.userScore = 0;
   gameDataObj.computerScore = 0;
 
