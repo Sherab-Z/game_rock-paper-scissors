@@ -51,46 +51,16 @@ const userChoosesScissors = scissorsBtn.addEventListener("click", () => {
     : console.log("Game ended");
 });
 
-// --- APPENDING DOM ELEMENTS TO CONTAINERS ---
+// --- FUNCTIONS ---
 
-// FUNC: Convert a DOM reference, elementObj, into a true array, in order to feed that into appendTextToElements(). This is needed because appendTextToElements() can only process a collection of DOM elements in the form of a true array.
-function convertElementToArray(elementObj) {
-  if (elementObj instanceof Element) {
-    return [elementObj];
-  } else if (elementObj instanceof NodeList || Array.isArray(elementObj)) {
-    return Array.from(elementObj);
-  } else {
-    throw new Error(
-      "Invalid argument: element must be a DOM element, a NodeList, or an array."
-    );
-  }
-}
-
-// FUNC: Append text to DOM element(s) for display on screen.
-function appendTextToElements(
-  text, // (string: required) The text content to be appended
-  elements, // (array, node-list, or other array-like obj: required) A list of DOM references ()
-  index = null, // (number: optional) This should be passed in if text is to be appended to only one specific element in the DOM reference list
-  singleElFromList = false // (boolean: optional)  Must be set to true if an index number is passed in to select a single el from a list of DOM references
+// FUNC: Append text to a DOM element for displaying on screen.
+function appendTextToElement(
+  msgStr, // (string: required) The text content to be appended
+  el // (DOM Reference object: required) A reference to a DOM element
 ) {
-  const els = convertElementToArray(elements); // Converts elements to an actual array of DOM references
-  if (index === null && !singleElFromList) {
-    // Default settings - a reference to only one DOM element is passed in as the elements arg
-    for (let i = 0; i < els.length; i++) {
-      const el = els[i];
-      const textNode = document.createTextNode(text);
-      el.appendChild(textNode);
-    }
-  } else if (index !== null) {
-    const el = els[index];
-    const textNode = document.createTextNode(text);
-    el.appendChild(textNode);
-  } else {
-    throw new Error("An index is required when singleElFromList is true.");
-  }
+  const textNode = document.createTextNode(msgStr);
+  el.appendChild(textNode);
 }
-
-// ....................................
 
 // FUNC: Returns Computer's random weapon choice str from an arr of options
 function makeRandomComputerChoice() {
@@ -140,7 +110,7 @@ function displayRoundWinnerTxt(roundWinner, roundNum) {
 
   switch (roundWinner) {
     case "tie":
-      appendTextToElements(tieRoundMsg, resultsTxtDisplayBox);
+      appendTextToElement(tieRoundMsg, resultsTxtDisplayBox);
     case "user_wins_round":
 
     case "computer_wins_round":
@@ -152,7 +122,7 @@ function askUserForWpnChoice() {
   const askForWpnChoiceMsg = `Round ${gameDataObj.roundNum}: Choose your weapon!...`;
 
   // Display message to User inside of instructions box
-  appendTextToElements(askForWpnChoiceMsg, instructTxtDisplayBox);
+  appendTextToElement(askForWpnChoiceMsg, instructTxtDisplayBox);
 }
 
 
@@ -178,13 +148,6 @@ function playRound(wpnStr, userScore, computerScore, roundNum) {
   }
 }
 
-// function roundLoop() {
-//   while (userScore < 5) {  // Repeat rounds until User reaches 5 points
-//     userScore += calcRoundWinner(roundSelectionsArr); // Add current round result to User's score
-
-//     }
-// }
-
 function resetGame() {
   console.log("resetGame() called");
 
@@ -197,5 +160,5 @@ function resetGame() {
 
   // Display initial instructions to User
   const welcomeStr = `Welcome to the game! \nRound 1: select your weapon...`;
-  appendTextToElements(welcomeStr, instructTxtDisplayBox);
+  appendTextToElement(welcomeStr, instructTxtDisplayBox);
 }
