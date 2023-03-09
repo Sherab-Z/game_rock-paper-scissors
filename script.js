@@ -5,8 +5,8 @@ const userScoreForGameEnd = 5; // when User reaches this score, the game ends
 const gameDataObj = {
   // Keep track of the round number, and each player's score
   roundNum: 0,
-  currentUserWpnChoice: '',
-  currentComputerWpnChoice: '',
+  currentUserWpnChoice: "",
+  currentComputerWpnChoice: "",
   userScore: 0,
   computerScore: 0,
 };
@@ -97,9 +97,9 @@ function updateScores(roundWinner) {
     case "tie":
     // Do nothing - players' scores don't change for a tie
     case "user_wins_round":
-      gameDataObj.userScore ++; // Increment User score by 1
+      gameDataObj.userScore++; // Increment User score by 1
     case "computer_wins_round":
-      gameDataObj.computerScore ++; // Increment Computer score by 1
+      gameDataObj.computerScore++; // Increment Computer score by 1
   }
 }
 
@@ -111,13 +111,13 @@ function displayRoundWinnerTxt(roundWinner) {
 
   switch (roundWinner) {
     case "tie":
-      appendTextToElement(tieRoundMsg, resultsTxtDisplayBox)
+      appendTextToElement(tieRoundMsg, resultsTxtDisplayBox);
       break;
     case "user_wins_round":
-      appendTextToElement(userWinsRoundMsg, resultsTxtDisplayBox)
+      appendTextToElement(userWinsRoundMsg, resultsTxtDisplayBox);
       break;
     case "computer_wins_round":
-      appendTextToElement(computerWinsRoundMsg, resultsTxtDisplayBox)
+      appendTextToElement(computerWinsRoundMsg, resultsTxtDisplayBox);
       break;
     default:
       appendTextToElement(errorMsg, resultsTxtDisplayBox);
@@ -132,18 +132,30 @@ function askUserForWpnChoice() {
   appendTextToElement(requestWpnChoiceMsg, instructTxtDisplayBox);
 }
 
+// FUNC: Clear text from message box(es) on the display. Arguments: 1 or more individual DOM references entered as separate args
+function clearTxtFromDisplayBoxes(...boxes) {
+  boxes.forEach((box) => {
+    box.textContent = "";
+  });
+}
 
 // FUNC: Play one round between User vs Computer
 function playRound(wpnStr) {
   console.log("playRound() called");
-  gameDataObj.roundNum ++; // Increment the round number
+
+  // Clear all text from message boxes
+  clearTxtFromDisplayBoxes(instructTxtDisplayBox, resultsTxtDisplayBox);
+  gameDataObj.roundNum++; // Increment the round number
 
   // Get weapon choices from both players
   gameDataObj.currentUserWpnChoice = wpnStr;
   gameDataObj.currentComputerWpnChoice = makeRandomComputerChoice();
 
   // Determine the winner of this round
-  const roundWinner = determineRoundWinner(gameDataObj.currentUserWpnChoice, gameDataObj.currentComputerWpnChoice);
+  const roundWinner = determineRoundWinner(
+    gameDataObj.currentUserWpnChoice,
+    gameDataObj.currentComputerWpnChoice
+  );
 
   // Display the results of this round to User
   displayRoundWinnerTxt(roundWinner);
@@ -158,10 +170,13 @@ function playRound(wpnStr) {
 function resetGame() {
   console.log("resetGame() called");
 
+  // Clear all text from message boxes
+  clearTxtFromDisplayBoxes(instructTxtDisplayBox, resultsTxtDisplayBox);
+
   // Initialize gameDataObj values for the start of a new game
   gameDataObj.roundNum = 1;
-  gameDataObj.currentUserWpnChoice = '';
-  gameDataObj.currentComputerWpnChoice = '';
+  gameDataObj.currentUserWpnChoice = "";
+  gameDataObj.currentComputerWpnChoice = "";
   gameDataObj.userScore = 0;
   gameDataObj.computerScore = 0;
 
