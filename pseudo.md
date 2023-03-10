@@ -53,6 +53,7 @@ Extras:
 
 ### Bugs:
 
+- When user wins the game, user score turns green! BUT when computer wins, computer score does not change color
 - Footer overlays main section when shrinking the window
 
   

@@ -21,18 +21,23 @@ const paperBtn = document.querySelector(".paper.wpn.btn");
 
 const scissorsBtn = document.querySelector(".scissors.wpn.btn");
 
-//  Display Boxes
-const instructTxtDisplayBox = document.querySelector(".instruct.msg.txt");
+//  Output display text
+const instructTxtDisplayTxt = document.querySelector(".instruct.msg.txt");
 
-const resultsTxtDisplayBox = document.querySelector(".results.msg.txt");
+const resultsMsgDisplayTxt = document.querySelector(".results.msg.txt");
 
-const userScoreDisplayBox = document.querySelector(
+const userScoreDisplayTxt = document.querySelector(
   ".user.plyr.current.score.num"
 );
 
-const computerScoreDisplayBox = document.querySelector(
+const computerScoreDisplayTxt = document.querySelector(
   ".computer.plyr.current.score.num"
 );
+
+// Output display containers
+const userScoreBox = document.querySelector(".user.plyr.current.score.text-display-box");
+
+const computerScoreBox = document.querySelector(".computer.plyr.current.score.text-display-box");
 
 // --- EVENT HANDLERS ---
 // Buttons
@@ -126,25 +131,25 @@ function updateScores(roundWinner) {
 
 // FUNC: Display current scores on UI
 function displayScores() {
-  appendTextToElement(gameDataObj.currentUserScore, userScoreDisplayBox);
+  appendTextToElement(gameDataObj.currentUserScore, userScoreDisplayTxt);
   appendTextToElement(
     gameDataObj.currentComputerScore,
-    computerScoreDisplayBox
+    computerScoreDisplayTxt
   );
 }
 
 // FUNC: At the end of each round, display a message with the winner of the round
 function displayWinnerMsg(roundWinner) {
   // Round winner messages
-  const tieRoundMsg = `It's a tie: you and the Computer both chose ${gameDataObj.currentUserWpnChoice}.`;
+  const tieRoundMsg = `Tie round: you and the Computer both chose ${gameDataObj.currentUserWpnChoice}...`;
   const userWinsRoundMsg = `Well chosen! ${gameDataObj.currentUserWpnChoice} beats ${gameDataObj.currentComputerWpnChoice} - You win this round!`;
   const computerWinsRoundMsg = `Sorry, ${gameDataObj.currentComputerWpnChoice} beats ${gameDataObj.currentUserWpnChoice}. The Computer wins this round!`;
 
   // Game winner messages
   const userWinsGameMsg =
-    "Congratulations! You won the game! Would you like to play again?...";
+    `Congratulations! You've won the game after ${gameDataObj.roundNum} rounds! Play again?...`;
   const computerWinsGameMsg =
-    "Better luck next time! The computer won the game. Would you like to play again?...";
+    `Better luck next time! The computer has won the game after ${gameDataObj.roundNum} rounds. Play again?...`;
 
   // Error message
   const errorMsg = `Error: Sorry, something went wrong...`;
@@ -155,23 +160,27 @@ function displayWinnerMsg(roundWinner) {
   ) {
     switch (roundWinner) {
       case "tie":
-        appendTextToElement(tieRoundMsg, resultsTxtDisplayBox);
+        appendTextToElement(tieRoundMsg, resultsMsgDisplayTxt);
         break;
       case "user_wins_round":
-        appendTextToElement(userWinsRoundMsg, resultsTxtDisplayBox);
+        appendTextToElement(userWinsRoundMsg, resultsMsgDisplayTxt);
         break;
       case "computer_wins_round":
-        appendTextToElement(computerWinsRoundMsg, resultsTxtDisplayBox);
+        appendTextToElement(computerWinsRoundMsg, resultsMsgDisplayTxt);
         break;
       default:
-        appendTextToElement(errorMsg, resultsTxtDisplayBox);
+        appendTextToElement(errorMsg, resultsMsgDisplayTxt);
     }
   } else if (gameDataObj.currentUserScore >= 5) {
-    appendTextToElement(userWinsGameMsg, resultsTxtDisplayBox);
+    userScoreDisplayTxt.style.color = "green";
+    resultsMsgDisplayTxt.style.color = "green"; 
+    appendTextToElement(userWinsGameMsg, resultsMsgDisplayTxt);
   } else if (gameDataObj.currentComputerScore >= 5) {
-    appendTextToElement(computerWinsGameMsg, resultsTxtDisplayBox);
+    computerScoreBox.style.color = "red";
+    resultsMsgDisplayTxt.style.color = "red"; 
+    appendTextToElement(computerWinsGameMsg, resultsMsgDisplayTxt);
   } else {
-    appendTextToElement(errorMsg, resultsTxtDisplayBox);
+    appendTextToElement(errorMsg, resultsMsgDisplayTxt);
   }
 }
 
@@ -180,7 +189,7 @@ function askUserForWpnChoice() {
   const requestWpnChoiceMsg = `Round ${gameDataObj.roundNum}: Choose your weapon!...`;
 
   // Display message to User inside of instructions box
-  appendTextToElement(requestWpnChoiceMsg, instructTxtDisplayBox);
+  appendTextToElement(requestWpnChoiceMsg, instructTxtDisplayTxt);
 }
 
 /* FUNC: Clear text from message box(es) on the UI. Arguments: 1 or more individual DOM references entered as separate args via rest parameter syntax to create a boxes array of DOM elements */
@@ -196,10 +205,10 @@ function playRound(wpnStr) {
 
   // Clear all text from message boxes
   clearTxtFromDisplayBoxes(
-    instructTxtDisplayBox,
-    resultsTxtDisplayBox,
-    userScoreDisplayBox,
-    computerScoreDisplayBox
+    instructTxtDisplayTxt,
+    resultsMsgDisplayTxt,
+    userScoreDisplayTxt,
+    computerScoreDisplayTxt
   );
 
   // Increment the round number
@@ -228,11 +237,16 @@ function resetGame() {
 
   // Clear all text from message boxes
   clearTxtFromDisplayBoxes(
-    instructTxtDisplayBox,
-    resultsTxtDisplayBox,
-    userScoreDisplayBox,
-    computerScoreDisplayBox
+    instructTxtDisplayTxt,
+    resultsMsgDisplayTxt,
+    userScoreDisplayTxt,
+    computerScoreDisplayTxt
   );
+
+  // Clear dynamically applied styles
+  userScoreDisplayTxt.style.color = "black";
+  computerScoreDisplayTxt.style.color = "black";
+  resultsMsgDisplayTxt.style.color = "white";
 
   // Initialize gameDataObj values for the start of a new game
   gameDataObj.roundNum = 1;
@@ -242,15 +256,15 @@ function resetGame() {
   gameDataObj.currentComputerScore = 0;
 
   // Display initial instructions on UI
-  const welcomeStr = `Welcome to the game! \nRound 1: select your weapon...`;
+  const welcomeStr = `Welcome to the game! It's human vs. computer - the first to score 5 points WINS... \nRound 1: select your weapon...`;
 
-  appendTextToElement(welcomeStr, instructTxtDisplayBox);
+  appendTextToElement(welcomeStr, instructTxtDisplayTxt);
 
   // Display initial scores
   let userScore = gameDataObj.currentUserScore;
   let computerScore = gameDataObj.currentComputerScore;
 
-  appendTextToElement(userScore, userScoreDisplayBox);
+  appendTextToElement(userScore, userScoreDisplayTxt);
 
-  appendTextToElement(computerScore, computerScoreDisplayBox);
+  appendTextToElement(computerScore, computerScoreDisplayTxt);
 }

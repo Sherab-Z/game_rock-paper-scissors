@@ -5,37 +5,12 @@
     - Containers
     - El's
   - Colors
-  - Remove wire-frame borders
+  - Remove wire-frame borders 
+      - delete css classes 
+      - delete html classes
   */
 /* --- CSS RESET --- */
 
-/* [ DEVELOPMENT STAGE WIRE-FRAMES ]*/
-.a {
-  border: red 1px solid;
-}
-
-.b {
-  border: orange solid 1px;
-}
-
-.c
- {
-  border: rgb(239, 239, 30) solid 1px;
-}
-
-.d {
-  border: green solid 1px;
-}
-
-.e {
-  border: blue solid 1px;
-}
-
-.f {
-  border: violet solid 1px;
-}
-
-/* --- EVERY ELEMENT --- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -43,9 +18,7 @@
   font-family: roboto;
 }
 
-/* --- OVERALL PAGE --- */
-
-.a {
+section {
   padding: 0 15%;
 }
 
@@ -54,7 +27,8 @@
 header,
 footer,
 section,
-.container
+.container,
+.text-display-box
 {
   justify-content: center;
   align-items: center;
@@ -64,6 +38,14 @@ section,
 {
   border-radius: 10px;
   width: 100%;
+}
+
+.plyr.current.score.text-display-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
 }
 
 .container {
@@ -85,7 +67,8 @@ main,
 footer,
 section,
 .container,
-.text-display-box {
+.text-display-box,
+.btn {
   display: flex;
   flex-direction: column;
   list-style: none;
@@ -116,17 +99,52 @@ body {
 }
 
 .btn {
+  align-items: center;
   font-size: large;
-  color:#020201;
+  color:#FFFFFF;
   padding: 5px 10px;
   border-radius: 10px;
   flex-shrink: 0;
+  background-color: #FF7F11;
 }
 
 /* Images in buttons */
 .btn .img {
-  width: 100%;
+  width: 85px;
   height: 85px;
+}
+
+/* Message Display Boxes */
+.msg.text-display-box {
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #68a8dc;
+  border: 2px solid darkslategrey;
+  width: 100%;
+  min-height: 70px;
+}
+
+/* text-display-boxes */
+.msg.txt {
+  justify-content: center;
+  align-items: center;
+  background-color: #68a8dc;
+  text-align: center;
+  font-size: x-large;
+}
+
+.title.txt {
+  border: 2px solid darkslategrey;
+  background-color: #68a8dc;
+  border-radius: 10px;
+  padding: 0 5px;
+}
+
+.plyr.current.score.num {
+  height: 15px;
+  font-size: x-large;
+  color: black;
 }
 
 /* --- AREAS IN PAGE --- */
@@ -134,42 +152,44 @@ body {
 /* Header */
 
 header {
-  color: #182010;
   flex-grow: 1;
   min-height: 50px;
   max-height: 10vh;
+  color: white;
+  background-color: #393E41;
 }
 
 /* --- Main --- */
 
 main {
   flex-grow: 8;
-  min-height: 500px;
+  min-height: 40vh;
   max-height: 85vh;
+  background-color: white;
 }
 
 /* --- Main > Start Section --- */
 
-
-
 .new-game.btn {
-  margin: 10px;
+  margin: 5px;
+  max-height: 40px;
 }
 
-section.start-sect {
+.new-game.btns.container {
+  height: 10px;
+}
+
+section.start.sect {
   flex: 1 0 30vh;
+  /* background-color: #065143; */
 }
 
-div.instruct.msg.text-display-box {
-  border: 3px solid darkslategrey;
-  width: 100%;
-  height: 100px;
-}
 /* --- Main > Gameplay Section --- */
 
-section.gameplay-sect {
+section.gameplay.sect {
   flex: 1 0 30vh;
   align-content: stretch;
+  background-color: #9DD9D2;
 }
 
 /* --- Main > Results Section --- */
@@ -177,18 +197,13 @@ section.results-sect {
   flex: 1 0 25vh;
 }
 
-div.results.msg.text-display-box {
-  border: 3px solid darkslategrey;
-  width: 100%;
-  min-height: 100px;
-}
 /* --- Footer --- */
 
 footer {
   flex-grow: 1;
-  min-height: 50px;
-  max-height: 5vh;
-  color: black;
+  height: 50px;
+  color: white;
+  background-color: #393E41;
 }
 
 footer .container,
