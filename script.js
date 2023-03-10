@@ -44,24 +44,24 @@ const clickNewGame = newGameBtn.addEventListener("click", () => {
 const userChoosesRock = rockBtn.addEventListener("click", () => {
   console.log("'Rock' btn clicked");
 
-  (gameDataObj.currentUserScore >= winningScore ||
-    gameDataObj.currentComputerScore >= winningScore)
+  gameDataObj.currentUserScore >= winningScore ||
+  gameDataObj.currentComputerScore >= winningScore
     ? console.log("Game ended")
     : playRound("rock");
 });
 const userChoosesPaper = paperBtn.addEventListener("click", () => {
   console.log("'Paper' btn clicked");
 
-  (gameDataObj.currentUserScore >= winningScore ||
-    gameDataObj.currentComputerScore >= winningScore)
+  gameDataObj.currentUserScore >= winningScore ||
+  gameDataObj.currentComputerScore >= winningScore
     ? console.log("Game ended")
     : playRound("paper");
-  });
+});
 const userChoosesScissors = scissorsBtn.addEventListener("click", () => {
   console.log("'Scissors' btn clicked");
 
-  (gameDataObj.currentUserScore >= winningScore ||
-    gameDataObj.currentComputerScore >= winningScore)
+  gameDataObj.currentUserScore >= winningScore ||
+  gameDataObj.currentComputerScore >= winningScore
     ? console.log("Game ended")
     : playRound("scissors");
 });
@@ -85,10 +85,13 @@ function makeRandomComputerChoice() {
 }
 
 // FUNC: Returns the winner of the current round
-function determineRoundWinner(currentUserWpnChoice, currentComputerWpnChoice) {
+function determineRoundWinner() {
   console.log("determineRoundWinner() called");
 
-  let choicesArr = [currentUserWpnChoice, currentComputerWpnChoice]; // For easier & more readable handling of the choices, turn them into an array
+  let choicesArr = [
+    gameDataObj.currentUserWpnChoice,
+    gameDataObj.currentComputerWpnChoice,
+  ]; // For easier & more readable handling of the choices, turn them into an array
 
   if (choicesArr[0] === choicesArr[1]) {
     return "tie"; // If choices are the same, then User & Computer tied in this round
@@ -117,35 +120,58 @@ function updateScores(roundWinner) {
       gameDataObj.currentComputerScore++; // Increment Computer score by 1
       break;
     default:
-      // Tie: do nothing
+    // Tie: do nothing
   }
 }
 
 // FUNC: Display current scores on UI
 function displayScores() {
   appendTextToElement(gameDataObj.currentUserScore, userScoreDisplayBox);
-  appendTextToElement(gameDataObj.currentComputerScore, computerScoreDisplayBox);
+  appendTextToElement(
+    gameDataObj.currentComputerScore,
+    computerScoreDisplayBox
+  );
 }
 
 // FUNC: At the end of each round, display a message with the winner of the round
-function displayRoundWinnerTxt(roundWinner) {
+function displayWinnerMsg(roundWinner) {
+  // Round winner messages
   const tieRoundMsg = `It's a tie: you and the Computer both chose ${gameDataObj.currentUserWpnChoice}.`;
   const userWinsRoundMsg = `Well chosen! ${gameDataObj.currentUserWpnChoice} beats ${gameDataObj.currentComputerWpnChoice} - You win this round!`;
   const computerWinsRoundMsg = `Sorry, ${gameDataObj.currentComputerWpnChoice} beats ${gameDataObj.currentUserWpnChoice}. The Computer wins this round!`;
+
+  // Game winner messages
+  const userWinsGameMsg =
+    "Congratulations! You won the game! Would you like to play again?...";
+  const computerWinsGameMsg =
+    "Better luck next time! The computer won the game. Would you like to play again?...";
+
+  // Error message
   const errorMsg = `Error: Sorry, something went wrong...`;
 
-  switch (roundWinner) {
-    case "tie":
-      appendTextToElement(tieRoundMsg, resultsTxtDisplayBox);
-      break;
-    case "user_wins_round":
-      appendTextToElement(userWinsRoundMsg, resultsTxtDisplayBox);
-      break;
-    case "computer_wins_round":
-      appendTextToElement(computerWinsRoundMsg, resultsTxtDisplayBox);
-      break;
-    default:
-      appendTextToElement(errorMsg, resultsTxtDisplayBox);
+  if (
+    gameDataObj.currentUserScore < 5 &&
+    gameDataObj.currentComputerScore < 5
+  ) {
+    switch (roundWinner) {
+      case "tie":
+        appendTextToElement(tieRoundMsg, resultsTxtDisplayBox);
+        break;
+      case "user_wins_round":
+        appendTextToElement(userWinsRoundMsg, resultsTxtDisplayBox);
+        break;
+      case "computer_wins_round":
+        appendTextToElement(computerWinsRoundMsg, resultsTxtDisplayBox);
+        break;
+      default:
+        appendTextToElement(errorMsg, resultsTxtDisplayBox);
+    }
+  } else if (gameDataObj.currentUserScore >= 5) {
+    appendTextToElement(userWinsGameMsg, resultsTxtDisplayBox);
+  } else if (gameDataObj.currentComputerScore >= 5) {
+    appendTextToElement(computerWinsGameMsg, resultsTxtDisplayBox);
+  } else {
+    appendTextToElement(errorMsg, resultsTxtDisplayBox);
   }
 }
 
@@ -184,15 +210,12 @@ function playRound(wpnStr) {
   gameDataObj.currentComputerWpnChoice = makeRandomComputerChoice();
 
   // Determine the winner of this round
-  const roundWinner = determineRoundWinner(
-    gameDataObj.currentUserWpnChoice,
-    gameDataObj.currentComputerWpnChoice
-  );
+  const roundWinner = determineRoundWinner();
 
   // Update scores & display the results of this round to User
   updateScores(roundWinner);
-  displayScores(roundWinner);
-  displayRoundWinnerTxt(roundWinner);
+  displayScores();
+  displayWinnerMsg(roundWinner);
 
   // Ask User for their choice of weapon for the following round
   if (gameDataObj.currentUserScore < 5) {
