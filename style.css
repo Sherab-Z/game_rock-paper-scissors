@@ -90,7 +90,6 @@ body {
 /* Buttons */
 .new-game.btns.container {
   padding: 5px;
-  
 }
 
 .wpn.btns.container {
@@ -100,12 +99,19 @@ body {
 
 .btn {
   align-items: center;
-  font-size: large;
+  justify-content: center;
+  font-size: x-large;
   color:#FFFFFF;
   padding: 5px 10px;
   border-radius: 10px;
   flex-shrink: 0;
   background-color: #FF7F11;
+}
+
+.wpn.btn {
+  width: 150px;
+  height: 150px;
+  flex-grow: 0;
 }
 
 /* Images in buttons */
