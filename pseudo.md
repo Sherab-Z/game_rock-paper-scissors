@@ -60,6 +60,7 @@ Extras:
   
 ### Features:
 
+- UPDATE LOGIC: First player to reach 5 points wins the game
 - FUNC: determineGameWinner()
 - FUNC: displayGameWinner()
 - Create gameSettingsObj to hold all settings (e.g. userScoreForGameEnd, etc) - to encapsulate those variables
