@@ -26,9 +26,13 @@ const instructTxtDisplayBox = document.querySelector(".instruct.msg.txt");
 
 const resultsTxtDisplayBox = document.querySelector(".results.msg.txt");
 
-const userScoreDisplayBox = document.querySelector(".user.plyr.current.score.num");
+const userScoreDisplayBox = document.querySelector(
+  ".user.plyr.current.score.num"
+);
 
-const computerScoreDisplayBox = document.querySelector(".computer.plyr.current.score.num");
+const computerScoreDisplayBox = document.querySelector(
+  ".computer.plyr.current.score.num"
+);
 
 // --- EVENT HANDLERS ---
 // Buttons
@@ -103,33 +107,24 @@ function determineRoundWinner(currentUserWpnChoice, currentComputerWpnChoice) {
 // FUNC: IF there's a winner in the current round, then increment their score; IF it's a tie, then do nothing
 function updateScores(roundWinner) {
   switch (roundWinner) {
-    case "tie":
-    // Do nothing - players' scores don't change for a tie
     case "user_wins_round":
       gameDataObj.currentUserScore++; // Increment User score by 1
+      break;
     case "computer_wins_round":
       gameDataObj.currentComputerScore++; // Increment Computer score by 1
-      // Display computer's current score
+      break;
+    default:
+      // Tie: do nothing
   }
 }
 
 // FUNC: Display current scores on UI
-function displayScores(roundWinner) {
-  userScoreToShow = gameDataObj.currentUserScore;
-  computerScoreToShow = gameDataObj.currentComputerScore;
-  switch (roundWinner) {
-    case "tie":
-      // Do nothing - scores remain unchanged
-      break;
-    case "user_wins_round":
-      appendTextToElement(userScoreToShow, userScoreDisplayBox);
-      break;
-    case "computer_wins_round":
-      appendTextToElement(computerScoreToShow, computerScoreDisplayBox);
-      break;
-  }
+function displayScores() {
+  appendTextToElement(gameDataObj.currentUserScore, userScoreDisplayBox);
+  appendTextToElement(gameDataObj.currentComputerScore, computerScoreDisplayBox);
 }
 
+// FUNC: At the end of each round, display a message with the winner of the round
 function displayRoundWinnerTxt(roundWinner) {
   const tieRoundMsg = `It's a tie: you and the Computer both chose ${gameDataObj.currentUserWpnChoice}.`;
   const userWinsRoundMsg = `Well chosen! ${gameDataObj.currentUserWpnChoice} beats ${gameDataObj.currentComputerWpnChoice} - You win this round!`;
@@ -159,9 +154,7 @@ function askUserForWpnChoice() {
   appendTextToElement(requestWpnChoiceMsg, instructTxtDisplayBox);
 }
 
-/* FUNC: Clear text from message box(es) on the UI. 
- Arguments: 1 or more individual DOM references entered as separate args 
- via rest parameter syntax to create a boxes array of DOM elements */
+/* FUNC: Clear text from message box(es) on the UI. Arguments: 1 or more individual DOM references entered as separate args via rest parameter syntax to create a boxes array of DOM elements */
 function clearTxtFromDisplayBoxes(...boxes) {
   boxes.forEach((box) => {
     box.textContent = "";
@@ -173,8 +166,15 @@ function playRound(wpnStr) {
   console.log("playRound() called");
 
   // Clear all text from message boxes
-  clearTxtFromDisplayBoxes(instructTxtDisplayBox, resultsTxtDisplayBox);
-  gameDataObj.roundNum++; // Increment the round number
+  clearTxtFromDisplayBoxes(
+    instructTxtDisplayBox,
+    resultsTxtDisplayBox,
+    userScoreDisplayBox,
+    computerScoreDisplayBox
+  );
+
+  // Increment the round number
+  gameDataObj.roundNum++;
 
   // Get weapon choices from both players
   gameDataObj.currentUserWpnChoice = wpnStr;
@@ -201,7 +201,12 @@ function resetGame() {
   console.log("resetGame() called");
 
   // Clear all text from message boxes
-  clearTxtFromDisplayBoxes(instructTxtDisplayBox, resultsTxtDisplayBox);
+  clearTxtFromDisplayBoxes(
+    instructTxtDisplayBox,
+    resultsTxtDisplayBox,
+    userScoreDisplayBox,
+    computerScoreDisplayBox
+  );
 
   // Initialize gameDataObj values for the start of a new game
   gameDataObj.roundNum = 1;
@@ -212,7 +217,7 @@ function resetGame() {
 
   // Display initial instructions on UI
   const welcomeStr = `Welcome to the game! \nRound 1: select your weapon...`;
-  
+
   appendTextToElement(welcomeStr, instructTxtDisplayBox);
 
   // Display initial scores

@@ -53,12 +53,13 @@ Extras:
 
 ### Bugs:
 
-- Scores not incrementing each round
-- For each new round, round-number not updating in instructions-box msg
 - Footer overlays main section when shrinking the window
 - At game end, no 'winner' msg is displayed
+- ?? Scores not incrementing/displaying properly...
+
   
 ### Features:
 
-- Display scores on UI
+- FUNC: determineGameWinner()
+- FUNC: displayGameWinner()
 - Create gameSettingsObj to hold all settings (e.g. userScoreForGameEnd, etc) - to encapsulate those variables
