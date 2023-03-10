@@ -7,20 +7,28 @@ const gameDataObj = {
   roundNum: 0,
   currentUserWpnChoice: "",
   currentComputerWpnChoice: "",
-  userScore: 0,
-  computerScore: 0,
+  currentUserScore: 0,
+  currentComputerScore: 0,
 };
 
 //  --- GET DOM ELEMENT REFERENCES ---
 //  Buttons
 const newGameBtn = document.querySelector(".new-game.btn");
+
 const rockBtn = document.querySelector(".rock.wpn.btn");
+
 const paperBtn = document.querySelector(".paper.wpn.btn");
+
 const scissorsBtn = document.querySelector(".scissors.wpn.btn");
 
-//  TextDisplays
+//  Display Boxes
 const instructTxtDisplayBox = document.querySelector(".instruct.msg.txt");
+
 const resultsTxtDisplayBox = document.querySelector(".results.msg.txt");
+
+const userScoreDisplayBox = document.querySelector(".user.plyr.current.score.num");
+
+const computerScoreDisplayBox = document.querySelector(".computer.plyr.current.score.num");
 
 // --- EVENT HANDLERS ---
 // Buttons
@@ -32,21 +40,21 @@ const clickNewGame = newGameBtn.addEventListener("click", () => {
 const userChoosesRock = rockBtn.addEventListener("click", () => {
   console.log("'Rock' btn clicked");
 
-  gameDataObj.userScore < userScoreForGameEnd
+  gameDataObj.currentUserScore < userScoreForGameEnd
     ? playRound("rock")
     : console.log("Game ended");
 });
 const userChoosesPaper = paperBtn.addEventListener("click", () => {
   console.log("'Paper' btn clicked");
 
-  gameDataObj.userScore < userScoreForGameEnd
+  gameDataObj.currentUserScore < userScoreForGameEnd
     ? playRound("paper")
     : console.log("Game ended");
 });
 const userChoosesScissors = scissorsBtn.addEventListener("click", () => {
   console.log("'Scissors' btn clicked");
 
-  gameDataObj.userScore < userScoreForGameEnd
+  gameDataObj.currentUserScore < userScoreForGameEnd
     ? playRound("scissors")
     : console.log("Game ended");
 });
@@ -55,10 +63,10 @@ const userChoosesScissors = scissorsBtn.addEventListener("click", () => {
 
 // FUNC: Append text to a DOM element for displaying on screen.
 function appendTextToElement(
-  msgStr, // (string: required) The text content to be appended
+  data, // (type: any; required) The text content to be appended (converted to a string inside this function)
   el // (DOM Reference object: required) A reference to a DOM element
 ) {
-  const textNode = document.createTextNode(msgStr);
+  const textNode = document.createTextNode(data.toString());
   el.appendChild(textNode);
 }
 
@@ -92,14 +100,33 @@ function determineRoundWinner(currentUserWpnChoice, currentComputerWpnChoice) {
   }
 }
 
+// FUNC: IF there's a winner in the current round, then increment their score; IF it's a tie, then do nothing
 function updateScores(roundWinner) {
   switch (roundWinner) {
     case "tie":
     // Do nothing - players' scores don't change for a tie
     case "user_wins_round":
-      gameDataObj.userScore++; // Increment User score by 1
+      gameDataObj.currentUserScore++; // Increment User score by 1
     case "computer_wins_round":
-      gameDataObj.computerScore++; // Increment Computer score by 1
+      gameDataObj.currentComputerScore++; // Increment Computer score by 1
+      // Display computer's current score
+  }
+}
+
+// FUNC: Display current scores on UI
+function displayScores(roundWinner) {
+  userScoreToShow = gameDataObj.currentUserScore;
+  computerScoreToShow = gameDataObj.currentComputerScore;
+  switch (roundWinner) {
+    case "tie":
+      // Do nothing - scores remain unchanged
+      break;
+    case "user_wins_round":
+      appendTextToElement(userScoreToShow, userScoreDisplayBox);
+      break;
+    case "computer_wins_round":
+      appendTextToElement(computerScoreToShow, computerScoreDisplayBox);
+      break;
   }
 }
 
@@ -132,7 +159,9 @@ function askUserForWpnChoice() {
   appendTextToElement(requestWpnChoiceMsg, instructTxtDisplayBox);
 }
 
-// FUNC: Clear text from message box(es) on the display. Arguments: 1 or more individual DOM references entered as separate args
+/* FUNC: Clear text from message box(es) on the UI. 
+ Arguments: 1 or more individual DOM references entered as separate args 
+ via rest parameter syntax to create a boxes array of DOM elements */
 function clearTxtFromDisplayBoxes(...boxes) {
   boxes.forEach((box) => {
     box.textContent = "";
@@ -157,12 +186,13 @@ function playRound(wpnStr) {
     gameDataObj.currentComputerWpnChoice
   );
 
-  // Display the results of this round to User
-  displayRoundWinnerTxt(roundWinner);
+  // Update scores & display the results of this round to User
   updateScores(roundWinner);
+  displayScores(roundWinner);
+  displayRoundWinnerTxt(roundWinner);
 
   // Ask User for their choice of weapon for the following round
-  if (gameDataObj.userScore < 5) {
+  if (gameDataObj.currentUserScore < 5) {
     askUserForWpnChoice();
   }
 }
@@ -177,10 +207,19 @@ function resetGame() {
   gameDataObj.roundNum = 1;
   gameDataObj.currentUserWpnChoice = "";
   gameDataObj.currentComputerWpnChoice = "";
-  gameDataObj.userScore = 0;
-  gameDataObj.computerScore = 0;
+  gameDataObj.currentUserScore = 0;
+  gameDataObj.currentComputerScore = 0;
 
-  // Display initial instructions to User
+  // Display initial instructions on UI
   const welcomeStr = `Welcome to the game! \nRound 1: select your weapon...`;
+  
   appendTextToElement(welcomeStr, instructTxtDisplayBox);
+
+  // Display initial scores
+  let userScore = gameDataObj.currentUserScore;
+  let computerScore = gameDataObj.currentComputerScore;
+
+  appendTextToElement(userScore, userScoreDisplayBox);
+
+  appendTextToElement(computerScore, computerScoreDisplayBox);
 }

@@ -49,8 +49,16 @@ Extras:
       - F: randomChoice(): Computer makes a random choice of 'rock', 'paper' or 'scissors', which is stored in the variable computerSelection
       - Returns the array [playerSelection, computerSelection]
     
-## TODO:
-- Make gameSettingsObj to hold all settings (e.g. userScoreForGameEnd, etc) - to encapsulate those variables
-- Remove p elements from text-display-boxes and reassign classes in script.js - bc. textNode will be created & appended by JS anyway
+## TO-DO:
+
+### Bugs:
+
+- Scores not incrementing each round
 - For each new round, round-number not updating in instructions-box msg
-- Game plays 10 rounds
+- Footer overlays main section when shrinking the window
+- At game end, no 'winner' msg is displayed
+  
+### Features:
+
+- Display scores on UI
+- Create gameSettingsObj to hold all settings (e.g. userScoreForGameEnd, etc) - to encapsulate those variables
