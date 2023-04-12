@@ -44,8 +44,9 @@ section,
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
+  background-color: white;
 }
 
 .container {
@@ -90,6 +91,10 @@ body {
 /* Buttons */
 .new-game.btns.container {
   padding: 5px;
+}
+
+button.new-game.btn {
+  font-size: 2.7rem;
 }
 
 .wpn.btns.container {
@@ -158,13 +163,8 @@ body {
   color: black;
   font-size: 2rem;
   border-bottom: 1px solid black;
-}
-
-div.current.score.text-display-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* border: 3px solid #8ed1c9; */
+  width: 170px;
+  text-align: center;
 }
 
 /* --- AREAS IN PAGE --- */
@@ -201,18 +201,20 @@ main {
 
 section.start.sect {
   flex: 1 0 30vh;
+  background-color: #393E41;
 }
 
 /* --- Main > Gameplay Section --- */
 
 section.gameplay.sect {
+  background-color: #393E41;
   flex: 1 0 30vh;
   align-content: stretch;
 }
 
 /* --- Main > Results Section --- */
-section.results-sect {
-  flex: 1 0 25vh;
+section.results.sect {
+  background-color: #393E41;
 }
 
 /* --- Footer --- */
