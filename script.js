@@ -147,9 +147,9 @@ function displayWinnerMsg(roundWinner) {
 
   // Game winner messages
   const userWinsGameMsg =
-    `Congratulations! You've won the game after ${gameDataObj.roundNum} rounds! Play again?...`;
+    `Congratulations! You've saved humanity from the bots after ${gameDataObj.roundNum} rounds!...But for how long?..Play again?...`;
   const computerWinsGameMsg =
-    `Better luck next time! The computer has won the game after ${gameDataObj.roundNum} rounds. Play again?...`;
+    `OH NO! The bots have won after ${gameDataObj.roundNum} rounds. But there might still be a chance for humanity.. Play again?...`;
 
   // Error message
   const errorMsg = `Error: Sorry, something went wrong...`;
@@ -186,7 +186,7 @@ function displayWinnerMsg(roundWinner) {
 
 function askUserForWpnChoice() {
   // Message string to display to User
-  const requestWpnChoiceMsg = `Round ${gameDataObj.roundNum}: Choose your weapon!...`;
+  const requestWpnChoiceMsg = `ROUND ${gameDataObj.roundNum} - Choose your weapon!...`;
 
   // Display message to User inside of instructions box
   appendTextToElement(requestWpnChoiceMsg, instructTxtDisplayTxt);
@@ -256,7 +256,7 @@ function resetGame() {
   gameDataObj.currentComputerScore = 0;
 
   // Display initial instructions on UI
-  const welcomeStr = `Welcome to the game! It's human vs. computer - the first to score 5 points WINS... \nRound 1: select your weapon...`;
+  const welcomeStr = `Welcome to the future, where it's human vs. computer...the first to score 5 points will take over the world...so keep your wits about you... ROUND 1! SELECT YOUR WEAPON!`;
 
   appendTextToElement(welcomeStr, instructTxtDisplayTxt);
 

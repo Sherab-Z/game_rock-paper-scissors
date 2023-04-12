@@ -125,32 +125,46 @@ body {
   align-items: center;
   justify-content: center;
   color: white;
-  background-color: #68a8dc;
-  border: 2px solid darkslategrey;
+  background-color: #8ed1c9;
   width: 100%;
   min-height: 70px;
+  padding: 10px;
 }
 
 /* text-display-boxes */
 .msg.txt {
   justify-content: center;
   align-items: center;
-  background-color: #68a8dc;
   text-align: center;
   font-size: x-large;
+  color: white;
 }
 
 .title.txt {
-  border: 2px solid darkslategrey;
-  background-color: #68a8dc;
+  background-color: #8ed1c9;
   border-radius: 10px;
   padding: 0 5px;
+  color: white;
+  font-size:x-large;
 }
 
 .plyr.current.score.num {
   height: 15px;
-  font-size: x-large;
+  font-size: 2.8rem;
+  color: #FF7F11;
+}
+
+.plyr.current.score.title {
   color: black;
+  font-size: 2rem;
+  border-bottom: 1px solid black;
+}
+
+div.current.score.text-display-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 3px solid #8ed1c9; */
 }
 
 /* --- AREAS IN PAGE --- */
@@ -187,7 +201,6 @@ main {
 
 section.start.sect {
   flex: 1 0 30vh;
-  /* background-color: #065143; */
 }
 
 /* --- Main > Gameplay Section --- */
@@ -195,7 +208,6 @@ section.start.sect {
 section.gameplay.sect {
   flex: 1 0 30vh;
   align-content: stretch;
-  background-color: #9DD9D2;
 }
 
 /* --- Main > Results Section --- */
